@@ -10,10 +10,8 @@ import java.util.Map;
 @RestController
 public class TryController {
 
-    @GetMapping("/")
-    public Map<String, String> hello() {
-        Map<String, String> tryMap = new HashMap<>();
-        tryMap.put("Hello", "World");
-        return tryMap;
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
     }
 }
