@@ -24,3 +24,20 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# Log files
+*.log
+
+# Application config files
+application.properties
