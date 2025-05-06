@@ -20,11 +20,11 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
 
-    private final String secretKey = "pkD8XjfQSpoWuzQbr616fWsSCHQv1S4gmy/imDjxjWA=";
+    private final String secretKey;
 
-//    public JwtUtils(String secretKey) {
-//        this.secretKey = secretKey;
-//    }
+    public JwtUtils(String secretKey) {
+        this.secretKey = secretKey;
+    }
 
     public String getSecretKey() {
         return secretKey;
