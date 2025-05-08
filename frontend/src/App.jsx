@@ -1,22 +1,17 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+
+import UserAuth from "./features/users/UserAuth";
+import UserLogin from "./features/users/UserLogin";
+import UserRegister from "./features/users/UserRegister";
 
 export default function App() {
-  const [data, setData] = useState("");
-
-  const getData = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/hello");
-      setData(res.data);
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  return <h1 className='text-9xl'>{data} from springboot</h1>;
+  return (
+    <Routes>
+      <Route path='userAuth' element={<UserAuth />}>
+        <Route index element={<UserLogin />} />
+        <Route path='login' element={<UserLogin />} />
+        <Route path='register' element={<UserRegister />} />
+      </Route>
+    </Routes>
+  );
 }
