@@ -4,6 +4,7 @@ import com.raicod3.ecommerce.dto.AuthResponse;
 import com.raicod3.ecommerce.dto.LoginRequest;
 import com.raicod3.ecommerce.dto.RegisterRequest;
 import com.raicod3.ecommerce.jwt.JwtAuthService;
+import com.raicod3.ecommerce.model.User;
 import com.raicod3.ecommerce.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +27,16 @@ public class AuthController {
         return ResponseEntity.ok(jwtAuthService.authenticate(loginRequest));
     }
 
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthResponse> Register(@RequestBody RegisterRequest registerRequest) {
+//        return ResponseEntity.ok(jwtAuthService.register(registerRequest));
+//    }
+
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> Register(@RequestBody RegisterRequest registerRequest) {
-        return ResponseEntity.ok(jwtAuthService.register(registerRequest));
+    public ResponseEntity<AuthResponse> Register() {
+       RegisterRequest user = new RegisterRequest();
+       user.setEmail("admin@raicod3.com");
+       user.setPassword("password");
+        return ResponseEntity.ok(jwtAuthService.register(user));
     }
 }
