@@ -3,12 +3,14 @@
 @theme {
   --bg-bgColor: #f2f2f2;
   --bg-primay: #1055ff;
+  --bg-primary-hover: #2073e9;
   --bg-dark: #352f36;
   --bg-lightGray: #7b7b7b;
   --bg-light: #fcfcf7;
 
   --color-bgColor: #f2f2f2;
   --color-primary: #1055ff;
+  --color-primary-hover: #2073e9;
   --color-dark: #352f36;
   --color-lightGray: #7b7b7b;
   --color-light: #fcfcf7;
