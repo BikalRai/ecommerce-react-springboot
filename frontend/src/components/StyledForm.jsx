@@ -8,7 +8,7 @@ export default function StyledForm({
 
   return (
     <form className={`${baseStyles} ${className}`} {...rest}>
-      <h1 className='text-5xl'>{formHeader}</h1>
+      <h1 className='text-4xl'>{formHeader}</h1>
       {children}
     </form>
   );

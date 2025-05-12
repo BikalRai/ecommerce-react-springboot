@@ -19,7 +19,7 @@ export default function StyledInput({
       </label>
       <div className='border rounded-sm flex items-center pr-4 peer-focus:border-blue-700'>
         <input
-          type={visibility ? "text" : name}
+          type={visibility ? "text" : type}
           id={name}
           name={name}
           className='py-1 px-4 w-full'
