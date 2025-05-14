@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const initialState = {
   user: null,
   isAuthenticated: false,
@@ -62,3 +64,21 @@ export function loginFailure() {
 export function clearError() {
   return { type: "clearError" };
 }
+
+// thunk action creators
+export const registerUser = (user) => {
+  return async (dispatch, getState) => {
+    dispatch(registerRequest());
+    try {
+      const res = axios.post("http://localhost:8080/api/auth/register", {
+        email: user.email,
+        password: user.password,
+      });
+      dispatch(registerSuccess(user));
+      console.log(res.data);
+    } catch (error) {
+      dispatch(registerFailure());
+      console.log(error.message);
+    }
+  };
+};
