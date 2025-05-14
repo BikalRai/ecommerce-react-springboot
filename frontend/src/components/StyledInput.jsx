@@ -5,6 +5,7 @@ export default function StyledInput({
   type = "text",
   name = "",
   text = "Add label Text",
+  handleUserDetails,
 }) {
   const [visibility, setVisibility] = useState(false);
 
@@ -23,6 +24,7 @@ export default function StyledInput({
           id={name}
           name={name}
           className='py-1 px-4 w-full'
+          onChange={handleUserDetails}
         />
         {type === "password" &&
           (visibility ? (

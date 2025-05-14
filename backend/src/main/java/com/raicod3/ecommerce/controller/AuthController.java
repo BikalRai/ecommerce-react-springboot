@@ -27,16 +27,16 @@ public class AuthController {
         return ResponseEntity.ok(jwtAuthService.authenticate(loginRequest));
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<AuthResponse> Register(@RequestBody RegisterRequest registerRequest) {
-//        return ResponseEntity.ok(jwtAuthService.register(registerRequest));
-//    }
-
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> Register() {
-       RegisterRequest user = new RegisterRequest();
-       user.setEmail("admin@raicod3.com");
-       user.setPassword("password");
-        return ResponseEntity.ok(jwtAuthService.register(user));
+    public ResponseEntity<AuthResponse> Register(@RequestBody RegisterRequest registerRequest) {
+        return ResponseEntity.ok(jwtAuthService.register(registerRequest));
     }
+
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthResponse> Register() {
+//       RegisterRequest user = new RegisterRequest();
+//       user.setEmail("admin@raicod3.com");
+//       user.setPassword("password");
+//        return ResponseEntity.ok(jwtAuthService.register(user));
+//    }
 }
