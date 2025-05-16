@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StyledForm from "../../components/StyledForm";
 import StyledInput from "../../components/StyledInput";
 import StyledPrimaryButton from "../../components/StyledPrimaryButton";
 import StyledSecondaryButton from "../../components/StyledSecondaryButton";
 import { useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "./userSlice";
+import { useDispatch } from "react-redux";
+import { register } from "./authSlice";
 
 export default function UserRegister() {
   const [user, setUser] = useState({
@@ -17,10 +17,9 @@ export default function UserRegister() {
     cPassword: "",
   });
 
-  const data = useSelector((state) => state);
+  const navigate = useNavigate();
 
-  console.log(data);
-
+  // dispatch function from redux
   const dispatch = useDispatch();
 
   const handleUserDetails = ({ target }) => {
@@ -32,7 +31,18 @@ export default function UserRegister() {
     e.preventDefault();
     if (user === null) return;
 
-    dispatch(registerUser(user));
+    dispatch(register(user));
+
+    setUser((prev) => ({
+      ...prev,
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      cPassword: "",
+    }));
+
+    navigate("/userAuth/login");
   };
 
   return (
@@ -53,29 +63,34 @@ export default function UserRegister() {
           <StyledInput
             name='firstname'
             text='First Name'
-            handleUserDetails={handleUserDetails}
+            handleInputs={handleUserDetails}
+            value={user.firstname}
           />
           <StyledInput
             name='lastname'
             text='Last Name'
-            handleUserDetails={handleUserDetails}
+            handleInputs={handleUserDetails}
+            value={user.lastname}
           />
           <StyledInput
             name='email'
             text='Email Address'
-            handleUserDetails={handleUserDetails}
+            handleInputs={handleUserDetails}
+            value={user.email}
           />
           <StyledInput
             type='password'
             name='password'
             text='Password'
-            handleUserDetails={handleUserDetails}
+            handleInputs={handleUserDetails}
+            value={user.password}
           />
           <StyledInput
             type='password'
             name='cPassword'
             text='Confirm Password'
-            handleUserDetails={handleUserDetails}
+            handleInputs={handleUserDetails}
+            value={user.cPassword}
           />
           <StyledPrimaryButton text='Create an Account' />
           <div className=' flex justify-between items-center'>
