@@ -8,9 +8,13 @@ import com.raicod3.ecommerce.model.User;
 import com.raicod3.ecommerce.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class JwtAuthService {
@@ -33,6 +37,10 @@ public class JwtAuthService {
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
+        Set<String> roles = new HashSet<>();
+        roles.add("ROLE_USER");
+        user.setRoles(roles);
+
         userRepository.save(user);
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(registerRequest.getEmail());
@@ -44,9 +52,12 @@ public class JwtAuthService {
 
     // this method can be used for both login and authentication of token
     public AuthResponse authenticate (LoginRequest loginRequest) {
+
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
+
         String token = jwtUtils.generateToken(userDetails);
+
         return new AuthResponse(token);
     }
 }
