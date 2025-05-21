@@ -1,5 +1,7 @@
 package com.raicod3.ecommerce.dto.product;
 
+import com.raicod3.ecommerce.model.Product;
+
 public class ProductResponseDTO {
 
     private int id;
@@ -13,14 +15,14 @@ public class ProductResponseDTO {
     public ProductResponseDTO() {
     }
 
-    public ProductResponseDTO(int id, String name, double price, String description, String imageUrl, String category, int quantity) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.category = category;
-        this.quantity = quantity;
+    public ProductResponseDTO(Product product) {
+       this.id = product.getId();
+       this.name = product.getName();
+       this.price = product.getPrice();
+       this.description = product.getDescription();
+       this.imageUrl = product.getImageUrl();
+       this.category = product.getCategory();
+       this.quantity = product.getQuantity();
     }
 
     public int getId() {
