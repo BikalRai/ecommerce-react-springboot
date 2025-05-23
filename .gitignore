@@ -41,3 +41,4 @@ target/
 
 # Application config files
 application.properties
+/.metadata/

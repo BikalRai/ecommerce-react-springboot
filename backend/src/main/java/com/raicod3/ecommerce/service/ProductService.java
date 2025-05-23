@@ -1,15 +1,19 @@
 package com.raicod3.ecommerce.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.raicod3.ecommerce.custom.exception.CustomException;
 import com.raicod3.ecommerce.dto.product.ProductRequestDTO;
 import com.raicod3.ecommerce.dto.product.ProductResponseDTO;
 import com.raicod3.ecommerce.model.Product;
 import com.raicod3.ecommerce.repository.ProductRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -47,29 +51,41 @@ public class ProductService {
     }
 
     // get all products
-    public List<ProductResponseDTO> getProducts() throws CustomException {
+    public Page<ProductResponseDTO> getProducts(int page, int size, String category) throws CustomException {
 
-        List<Product> products = productRepository.findAll();
-
-        if (products.isEmpty()) {
-            throw new CustomException("No products found");
-        }
-
-        List<ProductResponseDTO> productResponseDTOs = new ArrayList<>();
-
-        for (Product product : products) {
-            ProductResponseDTO dto = new ProductResponseDTO();
-            dto.setId(product.getId());
-            dto.setName(product.getName());
-            dto.setPrice(product.getPrice());
-            dto.setDescription(product.getDescription());
-            dto.setCategory(product.getCategory());
-            dto.setImageUrl(product.getImageUrl());
-            dto.setQuantity(product.getQuantity());
-            productResponseDTOs.add(dto);
-        }
-
-        return productResponseDTOs;
+    	Pageable pageable = PageRequest.of(page, size);
+    	
+    	Page<Product> productPage;
+    	
+    	if(category != null && !category.trim().isEmpty()) {
+    		productPage = productRepository.findByCategoryIgnoreCase(category.trim(), pageable);
+    	} else {
+    		productPage = productRepository.findAll(pageable);
+    	}
+    	
+    	return productPage.map(ProductResponseDTO::new);
+    	
+//        List<Product> products = productRepository.findAll();
+//
+//        if (products.isEmpty()) {
+//            throw new CustomException("No products found");
+//        }
+//
+//        List<ProductResponseDTO> productResponseDTOs = new ArrayList<>();
+//
+//        for (Product product : products) {
+//            ProductResponseDTO dto = new ProductResponseDTO();
+//            dto.setId(product.getId());
+//            dto.setName(product.getName());
+//            dto.setPrice(product.getPrice());
+//            dto.setDescription(product.getDescription());
+//            dto.setCategory(product.getCategory());
+//            dto.setImageUrl(product.getImageUrl());
+//            dto.setQuantity(product.getQuantity());
+//            productResponseDTOs.add(dto);
+//        }
+//
+//        return productResponseDTOs;
     }
 
     // get product by id
