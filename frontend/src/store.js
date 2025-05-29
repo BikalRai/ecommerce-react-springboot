@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/users/authSlice";
-import paginationReducer from "./components/pagination/paginationSlice";
+import filterReducer from "./components/filter/filterSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    pagination: paginationReducer,
+    filter: filterReducer,
   },
 });
 

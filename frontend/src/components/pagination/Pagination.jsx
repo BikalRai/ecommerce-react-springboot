@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { nextPage, previousPage, setPage } from "./paginationSlice";
+import { nextPage, previousPage, setPage } from "../filter/filterSlice";
 
 export default function Pagination() {
   const dispatch = useDispatch();
-  const currentPage = useSelector((state) => state.pagination.currentPage);
-  const totalPages = useSelector((state) => state.pagination.totalPages);
+  const currentPage = useSelector((state) => state.filter.currentPage);
+  const totalPages = useSelector((state) => state.filter.totalPages);
 
   const pages = [];
 
