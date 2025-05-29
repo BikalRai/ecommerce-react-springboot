@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import LogoutButton from "../features/logout/LogoutButton";
 import ProductList from "../features/product/ProductList";
+import Pagination from "../components/pagination/Pagination";
 
 export default function Home() {
   const user = useSelector((state) => state.auth.user);
@@ -10,6 +11,7 @@ export default function Home() {
       <h1>HOME</h1>
       {user && <LogoutButton />}
       <ProductList />
+      <Pagination />
     </>
   );
 }
