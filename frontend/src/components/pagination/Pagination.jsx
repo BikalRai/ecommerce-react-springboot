@@ -1,10 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { nextPage, previousPage, setPage } from "../filter/filterSlice";
+import {
+  filterProducts,
+  nextPage,
+  previousPage,
+  setCurrentPage,
+} from "../filter/filterSlice";
+import { useEffect } from "react";
 
 export default function Pagination() {
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.filter.currentPage);
   const totalPages = useSelector((state) => state.filter.totalPages);
+  const products = useSelector((state) => state.filter.products);
+  console.log(currentPage, "page");
+
+  useEffect(() => {
+    dispatch(filterProducts());
+  }, []);
 
   const pages = [];
 
@@ -24,10 +36,10 @@ export default function Pagination() {
       {pages.map((page) => (
         <button
           className={`border rounded py-1 px-3 cursor-pointer ${
-            currentPage === page && "bg-primary text-light"
+            page === currentPage && "bg-primary text-light"
           } hover:bg-primary hover:text-light transition`}
           key={page}
-          onClick={() => dispatch(setPage(page))}
+          onClick={() => dispatch(setCurrentPage(page))}
         >
           {page}
         </button>

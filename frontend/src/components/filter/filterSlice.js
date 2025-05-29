@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  page: 0,
+  currentPage: 0,
   size: 10,
   category: "",
   priceMin: 0,
@@ -20,18 +20,18 @@ const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setPage(state, action) {
-      state.page = action.payload;
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
     },
     nextPage(state) {
-      if (state.page < state.totalPages) state.page + -1;
+      if (state.currentPage < state.totalPages) state.currentPage + -1;
     },
     previousPage(state) {
-      if (state.page > 1) state.page -= 1;
+      if (state.currentPage > 1) state.currentPage -= 1;
     },
-    setTotalPages(state, action) {
-      state.totalPages = action.payload;
-    },
+    // setTotalPages(state, action) {
+    //   state.totalPages = action.payload;
+    // },
     setCategory(state, action) {
       state.category = action.payload;
     },
@@ -66,7 +66,7 @@ const filterSlice = createSlice({
 });
 
 export const {
-  setPage,
+  setCurrentPage,
   previousPage,
   nextPage,
   setCategory,
@@ -96,12 +96,15 @@ export function filterProducts() {
           },
         }
       );
+
+      console.log(res, "res");
       dispatch(
         productSuccess({
           content: res.data.content,
-          totalpage: res.data.totalPages,
+          totalPages: res.data.totalPages,
         })
       );
+      dispatch(setCurrentPage(res.data.pageable.pageNumber + 1));
     } catch (error) {
       dispatch(
         productFailure(
