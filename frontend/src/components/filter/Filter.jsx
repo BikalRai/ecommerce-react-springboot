@@ -1,14 +1,21 @@
-import SearchBar from '../SearchBar';
-import PriceSlider from './PriceSlider';
+import SearchBar from "../SearchBar";
+import CheckBox from "./CheckBox";
+import PriceSlider from "./PriceSlider";
 
 export default function Filter() {
   return (
-    <form action="">
+    <form action='' className='grid gap-5'>
       <PriceSlider />
-      <div>
+      <div className='grid gap-5'>
         <h1>Brands</h1>
-        <SearchBar />
-        <input type="checkbox" /> <span></span>
+        <SearchBar text='Enter brand name' />
+        <div>
+          <CheckBox brandName='brand one' />
+          <CheckBox brandName='brand two' />
+          <CheckBox brandName='brand three' />
+          <CheckBox brandName='brand four' />
+          <CheckBox brandName='brand five' />
+        </div>
       </div>
     </form>
   );
