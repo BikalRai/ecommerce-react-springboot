@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Box, Typography, Slider } from '@mui/material';
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Box, Typography, Slider } from "@mui/material";
 
 export default function PriceSlider() {
   const priceMin = useSelector((state) => state.filter.priceMin);
@@ -15,29 +15,31 @@ export default function PriceSlider() {
     }
   };
 
-  console.log(val, 'val');
+  console.log(val, "val");
   return (
     <Box sx={{ width: 250 }}>
       <Slider
-        getAriaLabel={() => 'Minimum distance'}
+        getAriaLabel={() => "Minimum distance"}
         value={val}
         onChange={handleChange}
-        valueLabelDisplay="auto"
+        valueLabelDisplay='auto'
         // getAriaValueText={valuetext}
         disableSwap
+        min={priceMin}
+        max={priceMax}
       />
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography
-          variant="body2"
+          variant='body2'
           onClick={() => setVal(priceMin)}
-          sx={{ cursor: 'pointer' }}
+          sx={{ cursor: "pointer" }}
         >
           {priceMin} min
         </Typography>
         <Typography
-          variant="body2"
+          variant='body2'
           onClick={() => setVal(priceMax)}
-          sx={{ cursor: 'pointer' }}
+          sx={{ cursor: "pointer" }}
         >
           {priceMax} max
         </Typography>
