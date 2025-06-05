@@ -6,13 +6,14 @@ const initialState = {
   size: 10,
   category: "",
   priceMin: 0,
-  priceMax: 1000,
+  priceMax: Number.MAX_SAFE_INTEGER,
   brand: "",
   sortBy: "",
   totalPages: 0,
   isLoading: false,
   status: "idle",
-  products: [],
+  allProducts: [],
+  filteredProducts: [],
   error: null,
 };
 
@@ -24,7 +25,7 @@ const filterSlice = createSlice({
       state.currentPage = action.payload;
     },
     nextPage(state) {
-      if (state.currentPage < state.totalPages) state.currentPage + -1;
+      if (state.currentPage < state.totalPages) state.currentPage += 1;
     },
     previousPage(state) {
       if (state.currentPage > 1) state.currentPage -= 1;
@@ -42,9 +43,21 @@ const filterSlice = createSlice({
       state.sortBy = action.payload;
     },
     setPriceRange(state, action) {
-      state.priceMin = action.payload[0];
-      state.priceMax = action.payload[1];
-      state.page = 0;
+      state.priceMin = parseInt(action.payload[0]);
+      state.priceMax = parseInt(action.payload[1]);
+      state.products = state.allProducts.filter((p) => {
+        const price = parseInt(p.price);
+        return (
+          !isNaN(price) && price >= state.priceMin && price <= state.priceMax
+        );
+      });
+      state.currentPage = 0;
+    },
+    resetPriceRange(state) {
+      state.priceMin = 0;
+      state.priceMax = Number.MAX_SAFE_INTEGER;
+      state.products = state.allProducts;
+      state.currentPage = 0;
     },
     productRequest(state) {
       state.status = "loading";
@@ -54,12 +67,17 @@ const filterSlice = createSlice({
     productSuccess(state, action) {
       state.status = "success";
       state.isLoading = false;
-      state.products = action.payload.content;
+      state.allProducts = action.payload.content;
+      state.filteredProducts = action.payload.content.filter(
+        (p) =>
+          parseInt(p.price) >= state.priceMin &&
+          parseInt(p.price) <= state.priceMax
+      );
       state.totalPages = action.payload.totalPages;
     },
     productFailure(state, action) {
       state.status = "failed";
-      state.isLoading = true;
+      state.isLoading = false;
       state.error = action.payload;
     },
   },
@@ -74,6 +92,7 @@ export const {
   setSortBy,
   setTotalPages,
   setPriceRange,
+  resetPriceRange,
   productRequest,
   productSuccess,
   productFailure,
@@ -82,8 +101,7 @@ export const {
 export function filterProducts() {
   return async (dispatch, getState) => {
     dispatch(productRequest());
-    const { page, size, category, priceMin, priceMax, brand, sortBy } =
-      getState().filter;
+    const { page, size, category } = getState().filter;
 
     try {
       const res = await axios.get(
@@ -97,7 +115,7 @@ export function filterProducts() {
         }
       );
 
-      console.log(res, "res");
+      // console.log(res, "res");
       dispatch(
         productSuccess({
           content: res.data.content,
