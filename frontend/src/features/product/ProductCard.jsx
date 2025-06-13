@@ -19,10 +19,13 @@ export default function ProductCard({ product }) {
       </div>
       <div className='productCard--details grid gap-5'>
         <p className='productCard--details-name'>{product.name}</p>
+        <p className='productCard--details-review'>
+          <span>⭐⭐⭐⭐</span>{" "}
+          <span className='text-sm'>{`(15 Reviews)`}</span>
+        </p>
         <p className='productCard--details-price text-primary text-xl'>
           Rs. {product.price}
         </p>
-        <StyledPrimaryButton text='Add to Cart' />
       </div>
     </div>
   );
